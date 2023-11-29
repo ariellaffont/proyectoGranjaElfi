@@ -5,6 +5,12 @@ let direccion = ""
 let envio = ""
 let metodoPago = ""
 
+
+function preguntarNombre() {
+    let nombre = prompt('Ingresá tu nombre')
+    mostrarMensaje('Bienvenido/a nuestra tienda',nombre)
+}
+
 function mostrarMenu() {
     let opcion = prompt(`Elija una función del menu. Ingrese el numero
     1) Ver productos
@@ -16,7 +22,7 @@ function mostrarMenu() {
 
     switch (parseInt(opcion)) {
         case 1:
-            mostrarProductos()
+            mostrarMensaje('1) Pollo $200\n2) Pechuga $400')
             volverAlMenu()
             break;
 
@@ -40,14 +46,14 @@ function mostrarMenu() {
             break
 
         case 6:
-            alert('Gracias por su visita')
-            break    
-    
+            mostrarMensaje('Gracias por su visita')
+            break
+
         default:
             if (isNaN(opcion)) {
-                alert('Ha ingresado un caracter. Por favor, solo ingrese numeros')
+                mostrarMensaje('Ha ingresado un caracter. Por favor, solo ingrese numeros')
             } else {
-                alert('Ha ingresado un numero invalido. Ingrese un numero entre 1 y 6')
+                mostrarMensaje('Ha ingresado un numero invalido. Ingrese un numero entre 1 y 6')
             }
             mostrarMenu()
             break;
@@ -55,16 +61,16 @@ function mostrarMenu() {
 
 }
 
-function mostrarProductos() {
-    alert(`1) Pollo $200\n2) Pechuga $400`)
+function mostrarMensaje(texto1, texto2='') {
+    alert(`${texto1} ${texto2}`)
 }
 
 function volverAlMenu() {
     let valor = confirm('Desea volver al menu principal?')
-    if(valor) {
+    if (valor) {
         mostrarMenu()
     } else {
-        alert('Gracias por su visita')
+        mostrarMensaje('Gracias por su visita')
     }
 }
 
@@ -74,9 +80,9 @@ function agregarAlCarrito() {
     let opcion
 
     do {
-        mostrarProductos()
+        mostrarMensaje('1) Pollo $200\n2) Pechuga $400')        
         opcion = parseInt(prompt(`Ingrese el numero del producto que quiere comprar.`))
-    } while ( isNaN(opcion) || opcion == '');
+    } while (isNaN(opcion) || opcion == '');
 
     // Validar que el usuario ingrese un número
 
@@ -92,10 +98,10 @@ function agregarAlCarrito() {
             cant = pedirCantidad()
             total += cant * 400
             unidades += cant
-            break;    
-    
+            break;
+
         default:
-            alert('Opcion invalida')
+            mostrarMensaje('Opcion invalida')
             agregarAlCarrito()
             break;
     }
@@ -113,58 +119,59 @@ function pedirCantidad() {
 
 function verCarrito() {
     if (total == 0 && unidades == 0) {
-        alert (`No hay ningún producto agregado en el carrito`)
+        mostrarMensaje(`No hay ningún producto agregado en el carrito`)
     }
     else {
-        alert (`El carrito tiene ${unidades} unidades.
+        mostrarMensaje(`El carrito tiene ${unidades} unidades.
 El total de la compra es $ ${total}`)
-    }    
+    }
 }
 
 function metodoEnvio() {
     let metodo = prompt(`Escriba TA para Take Away o DE para Delivery`).toUpperCase()
     if (metodo == "TA") {
         envio = "Take Away"
-        alert(`Seleccionaste satisfactoriamente Take Away`)
+        mostrarMensaje(`Seleccionaste satisfactoriamente Take Away`)
     }
-    else if (metodo == "DE"){
+    else if (metodo == "DE") {
         envio = "Delivery"
-        alert(`Seleccionaste satisfactoriamente Delivery`)
+        mostrarMensaje(`Seleccionaste satisfactoriamente Delivery`)
         direccion = prompt(`Ingrese su dirección`)
-        alert(`Muchas gracias!`)
+        mostrarMensaje(`Muchas gracias!`)
     }
     else {
-        alert(`Seleccionaste un metodo invalido, asegurate de escribir TA para Take Away o DE para Delivery`)
+        mostrarMensaje(`Seleccionaste un metodo invalido, asegurate de escribir TA para Take Away o DE para Delivery`)
         metodoEnvio()
     }
 }
 
 function pagar() {
-    let confirmacion = confirm (`Tu pedido está casi listo! Por favor asegurate que todos los datos sean correctos:
+    let confirmacion = confirm(`Tu pedido está casi listo! Por favor asegurate que todos los datos sean correctos:
 El carrito tiene ${unidades} unidades
 El total de la compra es $ ${total}
 El metodo de envio seleccionado es ${envio}
 La direccion ingresada es ${direccion}
 Por si o por no, estos datos son correctos?`)
     if (confirmacion) {
-    let metodo = parseInt(prompt(`selecciona el metodo de pago
+        let metodo = parseInt(prompt(`selecciona el metodo de pago
 1. Tarjeta de crédito
 2. Efectivo`))
-    if (metodo == 1) {
-        metodoPago = "Tarjeta de crédito"
-        alert(`Seleccionaste satisfactoriamente Tarjeta de crédito`)
+        if (metodo == 1) {
+            metodoPago = "Tarjeta de crédito"
+            alert(`Seleccionaste satisfactoriamente Tarjeta de crédito`)
+        }
+        else if (metodo == 2) {
+            metodoPago = "Efectivo"
+            alert(`Seleccionaste satisfactoriamente Efectivo`)
+        }
+        else {
+            mostrarMensaje(`Seleccione un numero valido`)
+            pagar()
+        }
     }
-    else if (metodo == 2) {
-        metodoPago = "Efectivo"
-        alert(`Seleccionaste satisfactoriamente Efectivo`)
-    }
-    else {
-        alert(`Seleccione un numero valido`)
-        pagar()
-    }
-}
-    alert(`Muchas gracias por tu compra`)
+    mostrarMensaje(`Muchas gracias por tu compra`)
     volverAlMenu()
 }
 
+preguntarNombre()
 mostrarMenu()
