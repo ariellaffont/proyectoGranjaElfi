@@ -1,51 +1,86 @@
-let total = 0
-let unidades = 0
 let costoEnvio = 0
 let direccion = ""
 let envio = ""
 let metodoPago = ""
+let carrito = []
+let productos = [
+    { id: 1, nombre: 'Milanesas de pollo x kg', precio: 300, categoria: 'Pollo' },
+    { id: 2, nombre: 'Pechugas de pollo x kg', precio: 200, categoria: 'Pollo' },
+    { id: 3, nombre: 'Milanesas de soja x kg', precio: 100, categoria: 'Vegetariano' },
+    { id: 4, nombre: 'Bastoncitos de lentejas x kg', precio: 50, categoria: 'Vegetariano' },
+];
+
 
 
 function preguntarNombre() {
-    let nombre = prompt('Ingresá tu nombre')
-    mostrarMensaje('Bienvenido/a nuestra tienda',nombre)
+    let nombre = prompt('Bienvenido a Granja Elfi, ingresá tu nombre por favor.')
+    mostrarMensaje(`Hola ${nombre}, en que podemos ayudarte?`)
+}
+
+function mostrarProductos() {
+    let texto = ``
+    productos.forEach(producto => {
+        texto += `${producto.id} - ${producto.nombre} - precio: ${producto.precio} - Categoria: ${producto.categoria} \n`
+    });
+    alert(texto)
+}
+
+function mostrarProductosPorCategoria() {
+    let categoria
+    let texto = `Los productos de la categoría seleccionada son:\n`
+    do {
+        categoria = prompt(`Escribe el nombre de la categoria:
+    Pollo
+    Vegetariano`).toLowerCase()
+    } while (categoria != `pollo` && categoria != `vegetariano`);
+    let resultadoCategoria = productos.filter((producto) => producto.categoria.toLowerCase() == categoria)
+    resultadoCategoria.forEach(producto => {
+        texto += `${producto.nombre} Precio $${producto.precio}\n`
+    });
+    alert(texto)
 }
 
 function mostrarMenu() {
     let opcion = prompt(`Elija una función del menu. Ingrese el numero
     1) Ver productos
-    2) Agregar productos al carrito
-    3) Ver carrito
-    4) Elegir método de envío
-    5) Pagar
-    6) Salir`)
+    2) Ver productos por categoria
+    3) Agregar productos al carrito
+    4) Ver carrito
+    5) Elegir método de envío
+    6) Pagar
+    7) Salir`)
 
     switch (parseInt(opcion)) {
         case 1:
-            mostrarMensaje('1) Pollo $200\n2) Pechuga $400')
+            mostrarProductos()
             volverAlMenu()
             break;
 
         case 2:
+            mostrarProductosPorCategoria()
+            volverAlMenu()
+            break;
+
+        case 3:
             agregarAlCarrito()
             mostrarMenu()
             break
 
-        case 3:
+        case 4:
             verCarrito()
             mostrarMenu()
             break
 
-        case 4:
+        case 5:
             metodoEnvio()
             mostrarMenu()
             break
 
-        case 5:
+        case 6:
             pagar()
             break
 
-        case 6:
+        case 7:
             mostrarMensaje('Gracias por su visita')
             break
 
@@ -53,7 +88,7 @@ function mostrarMenu() {
             if (isNaN(opcion)) {
                 mostrarMensaje('Ha ingresado un caracter. Por favor, solo ingrese numeros')
             } else {
-                mostrarMensaje('Ha ingresado un numero invalido. Ingrese un numero entre 1 y 6')
+                mostrarMensaje('Ha ingresado un numero invalido. Ingrese un numero entre 1 y 7')
             }
             mostrarMenu()
             break;
@@ -61,7 +96,7 @@ function mostrarMenu() {
 
 }
 
-function mostrarMensaje(texto1, texto2='') {
+function mostrarMensaje(texto1, texto2 = '') {
     alert(`${texto1} ${texto2}`)
 }
 
@@ -78,37 +113,15 @@ function agregarAlCarrito() {
 
     let cant
     let opcion
+    let encontrado
 
     do {
-        mostrarMensaje('1) Pollo $200\n2) Pechuga $400')        
+        mostrarProductos()
         opcion = parseInt(prompt(`Ingrese el numero del producto que quiere comprar.`))
-    } while (isNaN(opcion) || opcion == '');
-
-    // Validar que el usuario ingrese un número
-
-    switch (opcion) {
-        case 1:
-            cant = pedirCantidad()
-            total += cant * 200
-            unidades += cant
-            // unidades = + unidades + cant
-            break;
-
-        case 2:
-            cant = pedirCantidad()
-            total += cant * 400
-            unidades += cant
-            break;
-
-        default:
-            mostrarMensaje('Opcion invalida')
-            agregarAlCarrito()
-            break;
-    }
-    let seguir = confirm('Desea seguir agregando productos al carrito?')
-    if (seguir == true) {
-        agregarAlCarrito()
-    }
+        encontrado = productos.find((producto) => producto.id == opcion);
+    } while (encontrado == undefined);
+    cant = pedirCantidad()
+    carrito.push({ ...encontrado, cantidad: cant })
 }
 
 function pedirCantidad() {
@@ -118,12 +131,23 @@ function pedirCantidad() {
 }
 
 function verCarrito() {
-    if (total == 0 && unidades == 0) {
+    let total = 0
+    let unidades = 0
+    let texto = `El carrito contiene estos productos: \n`
+    if (carrito.length == 0) {
         mostrarMensaje(`No hay ningún producto agregado en el carrito`)
     }
     else {
-        mostrarMensaje(`El carrito tiene ${unidades} unidades.
-El total de la compra es $ ${total}`)
+        carrito.forEach(producto => {
+            total += producto.precio * producto.cantidad
+            unidades += producto.cantidad
+            texto += `Nombre: ${producto.nombre} Cantidad:${producto.cantidad} Precio:${producto.precio} \n`
+        });
+        texto += `
+        Total unidades: ${unidades}
+        Total a pagar: $${total}
+        `
+        alert(texto)
     }
 }
 
@@ -146,10 +170,9 @@ function metodoEnvio() {
 }
 
 function pagar() {
-    let confirmacion = confirm(`Tu pedido está casi listo! Por favor asegurate que todos los datos sean correctos:
-El carrito tiene ${unidades} unidades
-El total de la compra es $ ${total}
-El metodo de envio seleccionado es ${envio}
+    alert(`Tu pedido está casi listo! Por favor asegurate que todos los datos sean correctos:`)
+    verCarrito()
+    let confirmacion = confirm(`El metodo de envio seleccionado es ${envio}
 La direccion ingresada es ${direccion}
 Por si o por no, estos datos son correctos?`)
     if (confirmacion) {
