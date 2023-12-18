@@ -27,7 +27,7 @@ function mostrarProductos() {
 
 function mostrarProductosPorCategoria() {
     let categoria
-    let texto = `Los productos de la categoría seleccionada son:\n`
+    let texto = `Encontramos los siguientes productos en la categoría seleccionada:\n`
     do {
         categoria = prompt(`Escribe el nombre de la categoria:
     Pollo
@@ -141,7 +141,7 @@ function verCarrito() {
         carrito.forEach(producto => {
             total += producto.precio * producto.cantidad
             unidades += producto.cantidad
-            texto += `Nombre: ${producto.nombre} Cantidad:${producto.cantidad} Precio:${producto.precio} \n`
+            texto += `Nombre: ${producto.nombre} - Cantidad:${producto.cantidad} - Precio unitario:$${producto.precio} \n`
         });
         texto += `
         Total unidades: ${unidades}
