@@ -82,109 +82,35 @@
                 de productos asegura satisfacer todos los gustos. Sumérgete en nuestra galería y haz tu pedido ahora
                 para llevarte a casa la frescura y calidad que solo nosotros ofrecemos. </p>
         </div>
-        <div class="separacionImagenesProductos">
-            <div class="cardProducto">
-                <img src="img/producto-milanesa-pollo.jpg" alt="milanesa de pollo cocinada"
-                    class="tamanioImagenPedidos" />
-                <p class="tituloCard">
-                    MILANESAS DE POLLO
-                </p>
-                <p>
-                    U$D 5.00/KG
-                </p>
-                <button class="botonCarrito">
-                    Agregar al carrito
-                </button>
-            </div>
-            <div class="cardProducto">
-                <img src="img/producto-mila-soja.jpg" alt="milanesa de soja cocinada" class="tamanioImagenPedidos" />
-                <p class="tituloCard">
-                    MILANESAS DE SOJA SIMPLES / RELLENAS
-                </p>
-                <p>
-                    U$D 3.00/KG
-                </p>
-                <button class="botonCarrito">
-                    Agregar al carrito
-                </button>
-            </div>
-            <div class="cardProducto">
-                <img src="img/producto-hamburguesa.jpg" alt="medallon de hamburguesa de pollo cocinado"
-                    class="tamanioImagenPedidos" />
-                <p class="tituloCard">
-                    HAMBURGUESAS DE POLLO
-                </p>
-                <p>
-                    U$D 4.00/KG
-                </p>
-                <button class="botonCarrito">
-                    Agregar al carrito
-                </button>
-            </div>
-            <div class="cardProducto">
-                <img src="img/producto-chips.jpg" alt="chips varios fritos cocidos" class="tamanioImagenPedidos" />
-                <p class="tituloCard">
-                    BASTONCITOS DE POLLO / AROS DE CEBOLLA
-                </p>
-                <p>
-                    U$D 5.00/KG
-                </p>
-                <button class="botonCarrito">
-                    Agregar al carrito
-                </button>
-            </div>
-            <div class="cardProducto">
-                <img src="img/portada.jpg" alt="pata muslo lista para cocinar" class="tamanioImagenPedidos" />
-                <p class="tituloCard">
-                    PATA-MUSLO
-                </p>
-                <p>
-                    U$D 3.50/KG
-                </p>
-                <button class="botonCarrito">
-                    Agregar al carrito
-                </button>
-            </div>
-            <div class="cardProducto">
-                <img src="img/Polloentero.jpg" alt="pollo entero crudo listo para cocinar"
-                    class="tamanioImagenPedidos" />
-                <p class="tituloCard">
-                    POLLO ENTERO
-                </p>
-                <p>
-                    U$D 2.50/KG
-                </p>
-                <button class="botonCarrito">
-                    Agregar al carrito
-                </button>
-            </div>
-            <div class="cardProducto">
-                <img src="img/Alitaspollo.jpg" alt="alitas de pollo presentadas en una tabla listas para cocinar"
-                    class="tamanioImagenPedidos" />
-                <p class="tituloCard">
-                    ALITAS DE POLLO
-                </p>
-                <p>
-                    U$D 1.50/KG
-                </p>
-                <button class="botonCarrito">
-                    Agregar al carrito
-                </button>
-            </div>
-            <div class="cardProducto">
-                <img src="img/Pechugaspollo.jpg" alt="pechugas de pollo deliciosas listas para cocinar"
-                    class="tamanioImagenPedidos" />
-                <p class="tituloCard">
-                    PECHUGAS DE POLLO
-                </p>
-                <p>
-                    U$D 4.50/KG
-                </p>
-                <button class="botonCarrito">
-                    Agregar al carrito
-                </button>
-            </div>
+        <div class="separacionImagenesProductos" id="productContainer">
         </div>
+        <!-- Aca van los productos -->
+        <div class="carritoContainer">
+            <table style="width: 90%; margin: 0 auto;">
+                <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Precio unitario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="listadoCarrito">
+                <tr>
+                    <td>No hay productos agregados al carrito</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        <form id="formulario">
+            <label for="name">Nombre</label><br>
+            <input type="text" name="name" id="name" required><br>
+            <label for="address">Direccion</label><br>
+            <input type="text" name="address" id="address" required><br>
+            <label for="tel">Telefono</label><br>
+            <input type="tel" name="tel" id="tel" required><br>
+            <button id="completarBtn" disabled>Completar compra</button>
+        </form>
     </main>
 
     <!-- FIN MAIN -->
@@ -271,7 +197,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
-    <script src="./js/pedidos.js"></script>
+    <script src="./js/pedidos2.js"></script>
 
 </body>
 
