@@ -1,0 +1,50 @@
+[
+    {
+    "id": 1,
+    "name": "Milanesas de pollo",
+    "price": 5.00,
+    "image": "./img/producto-milanesa-pollo.jpg"
+    },
+    {
+    "id": 2,
+    "name": "Milanesas de soja simples o rellenas",
+    "price": 3.00,
+    "image": "./img/producto-mila-soja.jpg"
+    },
+    {
+    "id": 3,
+    "name": "Hamburguesas de pollo",
+    "price": 4.00,
+    "image": "./img/producto-hamburguesa.jpg"
+    },
+    {
+    "id": 4,
+    "name": "Bastoncitos de pollo / Aros de cebolla",
+    "price": 5.00,
+    "image": "./img/producto-chips.jpg"
+    },
+    {
+    "id": 5,
+    "name": "Pata muslo",
+    "price": 3.50,
+    "image": "./img/portada.jpg"
+    },
+    {
+    "id": 6,
+    "name": "Pollo entero",
+    "price": 2.50,
+    "image": "./img/Polloentero.jpg"
+    },
+    {
+    "id": 7,
+    "name": "Alitas de pollo",
+    "price": 1.50,
+    "image": "./img/Alitaspollo.jpg"
+    },
+    {
+    "id": 8,
+    "name": "Pechugas de pollo",
+    "price": 4.50,
+    "image": "./img/Pechugaspollo.jpg"
+    }
+]
