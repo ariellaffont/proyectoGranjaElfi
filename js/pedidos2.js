@@ -1,3 +1,5 @@
+
+
 let productos = [{
     id: 1,
     name: `Milanesas de pollo`,
@@ -53,6 +55,7 @@ localStorage.getItem("carrito") != null ? mostrarCarrito() : console.log("No hay
 function listarProductos() {
     const container = document.getElementById('productContainer')
     let html = ''
+
     productos.forEach(producto => {
         html += `<div class="cardProducto">
         <img src="${producto.image}" alt="${producto.name}"
@@ -63,7 +66,7 @@ function listarProductos() {
         <p>
             U$D ${producto.price}
         </p>
-        <button class="botonCarrito" onclick='agregarAlCarrito("${producto.id}")'>
+        <button class="botonCarrito" onclick='agregarAlCarrito("${producto.id}", "${producto.name}")'>
             Agregar al carrito
         </button>
     </div>`
@@ -77,7 +80,7 @@ function listarProductos() {
 
 listarProductos()
 
-function agregarAlCarrito(id) {
+function agregarAlCarrito(id, nombreProducto) {
     let resultado = productos.find(producto => producto.id == id)
     resultado == null ? console.error('Producto no encontrado') : resultado.unidades = resultado.unidades ? resultado.unidades + 1 : 1;
     let productoEnCarrito = carrito.find(item => item.id === resultado.id);
@@ -86,10 +89,18 @@ function agregarAlCarrito(id) {
         productoEnCarrito.unidades = resultado.unidades;
     } else {
         carrito.push(resultado)
+
+    //     $.toast.success(, 'Carrito de compras');    }
     }
-    console.log(carrito);
     localStorage.setItem("carrito",JSON.stringify(carrito))
     mostrarCarrito()
+    Toastify({
+
+        text: `¡${nombreProducto} se ha agregado al carrito!`,
+        
+        duration: 3000
+        
+        }).showToast();
     }
 
 
