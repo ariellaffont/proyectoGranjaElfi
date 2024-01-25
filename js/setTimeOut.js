@@ -159,10 +159,10 @@
 //         console.log(products);
 //     })
 
-const obtenerProductos = async () => {
-    const resp = await fetch("public/data/products.json");
-    const data = await resp.json();
-    products = [...data];
-    console.log(products);
-}
-obtenerProductos()
+// const obtenerProductos = async () => {
+//     const resp = await fetch("public/data/products.json");
+//     const data = await resp.json();
+//     products = [...data];
+//     console.log(products);
+// }
+// obtenerProductos()

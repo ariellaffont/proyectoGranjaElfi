@@ -1,55 +1,17 @@
 
 
-let productos = [{
-    id: 1,
-    name: `Milanesas de pollo`,
-    price: 5.00,
-    image: './img/producto-milanesa-pollo.jpg'
-},
-{
-    id: 2,
-    name: `Milanesas de soja simples o rellenas`,
-    price: 3.00,
-    image: './img/producto-mila-soja.jpg'
-},
-{
-    id: 3,
-    name: `Hamburguesas de pollo`,
-    price: 4.00,
-    image: './img/producto-hamburguesa.jpg'
-},
-{
-    id: 4,
-    name: `Bastoncitos de pollo / Aros de cebolla`,
-    price: 5.00,
-    image: './img/producto-chips.jpg'
-},
-{
-    id: 5,
-    name: `Pata muslo`,
-    price: 3.50,
-    image: './img/portada.jpg'
-},
-{
-    id: 6,
-    name: `Pollo entero`,
-    price: 2.50,
-    image: './img/Polloentero.jpg'
-},
-{
-    id: 7,
-    name: `Alitas de pollo`,
-    price: 1.50,
-    image: './img/Alitaspollo.jpg'
-},
-{
-    id: 8,
-    name: `Pechugas de pollo`,
-    price: 4.50,
-    image: './img/Pechugaspollo.jpg'
+let productos = []
+
+const obtenerProductos = async () => {
+    const resp = await fetch("../public/data/productos.json");
+    const data = await resp.json();
+    productos = [...data];
+    listarProductos();
 }
-]
- let carrito = localStorage.getItem("carrito") == null ? [] : JSON.parse(localStorage.getItem("carrito"))
+obtenerProductos()
+
+
+let carrito = localStorage.getItem("carrito") == null ? [] : JSON.parse(localStorage.getItem("carrito"))
 localStorage.getItem("carrito") != null ? mostrarCarrito() : console.log("No hay productos en el carrito");
 
 function listarProductos() {
@@ -89,19 +51,17 @@ function agregarAlCarrito(id, nombreProducto) {
         productoEnCarrito.unidades = resultado.unidades;
     } else {
         carrito.push(resultado)
-
-    //     $.toast.success(, 'Carrito de compras');    }
     }
-    localStorage.setItem("carrito",JSON.stringify(carrito))
+    localStorage.setItem("carrito", JSON.stringify(carrito))
     mostrarCarrito()
     Toastify({
 
         text: `¡${nombreProducto} se ha agregado al carrito!`,
-        
+
         duration: 3000
-        
-        }).showToast();
-    }
+
+    }).showToast();
+}
 
 
 
@@ -109,7 +69,7 @@ function eliminarProducto(id) {
     let resultado = carrito.findIndex(producto => producto.id == id)
     resultado === -1 ? console.error('Producto no encontrado') : carrito.splice(resultado, 1)
     console.log(carrito);
-    localStorage.setItem("carrito",JSON.stringify(carrito))
+    localStorage.setItem("carrito", JSON.stringify(carrito))
     mostrarCarrito()
 
 }
@@ -131,7 +91,7 @@ function mostrarCarrito() {
         <td><button class="eliminar" onclick='eliminarProducto("${producto.id}")'>Eliminar</button></td>
     </tr>`
 
-    total += producto.price * producto.unidades;
+        total += producto.price * producto.unidades;
     })
     html += `                
     <tr>
@@ -139,21 +99,21 @@ function mostrarCarrito() {
     <td></td>
     <td>Total: </td>
     <td>U$D ${total.toFixed(2)}</td>
-</tr>`   
+</tr>`
 
 
 
-container.innerHTML = html
+    container.innerHTML = html
 }
 
 document.getElementById('name').addEventListener("blur", validarFormulario)
 document.getElementById('address').addEventListener("blur", validarFormulario)
 document.getElementById('tel').addEventListener("blur", validarFormulario)
 
-function validarFormulario () {
-    if(document.getElementById("name").value != "" &&
-    document.getElementById("address").value != "" &&
-    document.getElementById("tel").value != "" ) {
+function validarFormulario() {
+    if (document.getElementById("name").value != "" &&
+        document.getElementById("address").value != "" &&
+        document.getElementById("tel").value != "") {
 
         document.getElementById("completarBtn").disabled = false
     } else {
@@ -164,48 +124,49 @@ function validarFormulario () {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-const completarBtn = document.querySelector('#completarBtn');
+    const completarBtn = document.querySelector('#completarBtn');
 
-completarBtn.addEventListener("click", (evento) => {
-    Swal.fire({
-        title: 'Confirma para finalizar el pedido y proceder a forma de pago',
-        text: 'Quiere continuar?',
-        timer:20000,
-        timerProgressBar: true,
-        confirmButtonColor: "green",
-        confirmButtonText: 'Si',
-        showCancelButton: true,
-        cancelButtonText: "Cancelar",
-        cancelButtonColor: "red",
-        imageUrl: "https://cdn.pixabay.com/photo/2020/04/07/17/01/chicks-5014152_1280.jpg",
-        imageWidth: 400
-    }).then((respuesta) => {
-        if (respuesta.isConfirmed) {
-            Swal.fire({
-                title: `Gracias por tu compra :)
+    completarBtn.addEventListener("click", (evento) => {
+        Swal.fire({
+            title: 'Confirma para finalizar el pedido y proceder a forma de pago',
+            text: 'Quiere continuar?',
+            timer: 20000,
+            timerProgressBar: true,
+            confirmButtonColor: "green",
+            confirmButtonText: 'Si',
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            cancelButtonColor: "red",
+            imageUrl: "https://cdn.pixabay.com/photo/2020/04/07/17/01/chicks-5014152_1280.jpg",
+            imageWidth: 400
+        }).then((respuesta) => {
+            if (respuesta.isConfirmed) {
+                Swal.fire({
+                    title: `Gracias por tu compra :)
                 Te esperamos nuevamente`,
-                imageUrl: "https://images.pexels.com/photos/6294198/pexels-photo-6294198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-                imageWidth: 200,
-            })
-                .then((respuesta) => {
-                    if (respuesta.isConfirmed) {
-                        enviarCompra();
-                        localStorage.removeItem("carrito");
-                        carrito = [];
-                        mostrarCarrito();
-                        document.getElementById('formulario').reset();
-                    }
+                    imageUrl: "https://images.pexels.com/photos/6294198/pexels-photo-6294198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                    imageWidth: 200,
+                })
+                    .then((respuesta) => {
+                        if (respuesta.isConfirmed) {
+                            enviarCompra();
+                            localStorage.removeItem("carrito");
+                            carrito = [];
+                            mostrarCarrito();
+                            document.getElementById('formulario').reset();
+                        }
                     })
-        }
-        if (respuesta.isDismissed) {
-            Swal.fire({
-                title: `Has cancelado la compra :(
+            }
+            if (respuesta.isDismissed) {
+                Swal.fire({
+                    title: `Has cancelado la compra :(
                     Vuelve pronto!`,
-                imageUrl: "https://images.pexels.com/photos/6898855/pexels-photo-6898855.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-                imageWidth: 200
-            })
-        }
-    })})
+                    imageUrl: "https://images.pexels.com/photos/6898855/pexels-photo-6898855.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                    imageWidth: 200
+                })
+            }
+        })
+    })
 });
 
 // document.getElementById('completarBtn').addEventListener("click", (evento) => {
